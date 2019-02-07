@@ -4,7 +4,6 @@ import re
 import glob
 import bz2
 
-
 # User input--directories
 # baseDir='/mnt/microscopy/projects/KeCa_20141001_BMI_widefield/WF_imaging/reduced/t41/20160710/rs/stim/'; % visual stimulus happening 
 # baseDir='/mnt/microscopy/projects/KeCa_20141001_BMI_widefield/WF_imaging/reduced/t35/30260603/retrosplenial/spon-pre/'; % spontaneous in the dark pre-task
@@ -54,6 +53,7 @@ reduced_dest = '/home/spencer/Documents/widefield_analysis/data/'
 # reduced_post = '/rs/stim1/imaging/'
 # reduced_name = '-rs-stim1-1@****_binn_perm.bin.bz2'
 
+# DECOMPRESS BZ2s 
 for mouse in mice[4:]:
 	folder = reduced_dest + mouse + '/'
 	os.chdir(folder)

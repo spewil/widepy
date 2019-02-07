@@ -6,7 +6,6 @@ from PIL import Image
 import numpy as np
 import cv2
 from scipy.io import loadmat
-from scipy.misc import bytescale
 
 def make_avi(image_stack, output_folder, filename='stack.avi'):
 	'''
@@ -65,6 +64,7 @@ def get_metadata_from_mat(path):
 
 	return (num_frames, frame_rows, frame_cols), num_blocks
 
+
 if __name__ == '__main__':
 
 	# to-do 
@@ -91,25 +91,22 @@ if __name__ == '__main__':
 	file = open(folder+DF_FILE,mode='r')
 	stacked_tensor = np.memmap(file, dtype='uint16', mode='r', shape=stack_shape, order='F')
 
-	
+	chunk = stacked_tensor[:100]
 
-	# get each image as a single row  
-	image = stacked_tensor[0].copy()
-	print(image.shape, rows*cols)
-	image.transpose(1,0).reshape((rows*cols))
-	
-	x = np.arange(12)
-	x = x.reshape(3,4).transpose(1,0)
-	print(x)
-	x = x.transpose(1,0).reshape((12))
-	print(x)
+	# get each image as a 1D column stack 
+	print(chunk.shape)
+	chunk = chunk.transpose(0,2,1).reshape((chunk.shape[0],rows*cols,)).transpose(1,0)
+	print(chunk.shape)
 
 	# make avi 
 	# make_avi(stacked_tensor, "/home/spencer/Documents/widepy/video/", filename=mouse_name+'_stack.avi')
 
 	# one pixel for the whole recording
-	# plt.plot(stacked_tensor[:-10000,150,220])
+	plt.plot(stacked_tensor[:100,150,220],'b')
 	# plt.show()
+	plt.plot(chunk[150+(rows)*(220),:],'r')
+	plt.show()
+	
 	# # make an image of one time point in a random trial 
 	# plt.imshow(stacked_tensor[-10,:,:])
 	# plt.show()
